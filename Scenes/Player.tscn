@@ -1,0 +1,116 @@
+[gd_scene load_steps=14 format=3 uid="uid://7hiqwefd20su"]
+
+[ext_resource type="Texture2D" uid="uid://dt0af4o7yh41a" path="res://Assets/Player/Player.png" id="1_0we7u"]
+[ext_resource type="Script" path="res://Scripts/Player.gd" id="1_lp6ev"]
+[ext_resource type="Texture2D" uid="uid://dsg2krqtkgnca" path="res://Assets/Player/Player-explosion3.png" id="2_r5swc"]
+[ext_resource type="Texture2D" uid="uid://bi2vdab3slwgf" path="res://Assets/Player/Player-explosion1.png" id="4_t5bn4"]
+[ext_resource type="Texture2D" uid="uid://b4mk25ro2nqtu" path="res://Assets/Player/Player-explosion2.png" id="5_x0b6n"]
+[ext_resource type="Script" path="res://Scripts/Gun.gd" id="6_glm2j"]
+[ext_resource type="PackedScene" uid="uid://bo7ex0dustdfh" path="res://Scenes/Laser.tscn" id="7_sfvcn"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_i1qdc"]
+size = Vector2(13, 4)
+
+[sub_resource type="Animation" id="Animation_msyxr"]
+resource_name = "default"
+length = 0.1
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("1_0we7u")]
+}
+
+[sub_resource type="Animation" id="Animation_o70eb"]
+resource_name = "destroy"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("4_t5bn4"), ExtResource("5_x0b6n"), ExtResource("2_r5swc"), ExtResource("4_t5bn4"), ExtResource("5_x0b6n"), ExtResource("2_r5swc")]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.55),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_osbcx"]
+_data = {
+"default": SubResource("Animation_msyxr"),
+"destroy": SubResource("Animation_o70eb")
+}
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_0v6n0"]
+a = Vector2(0, -4)
+b = Vector2(0, 4)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_eqso1"]
+size = Vector2(13, 3.5)
+
+[node name="Player" type="CharacterBody2D"]
+collision_mask = 32
+script = ExtResource("1_lp6ev")
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("4_t5bn4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 2)
+shape = SubResource("RectangleShape2D_i1qdc")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "default"
+libraries = {
+"": SubResource("AnimationLibrary_osbcx")
+}
+
+[node name="Hurt" type="Area2D" parent="."]
+collision_mask = 12
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurt"]
+shape = SubResource("SegmentShape2D_0v6n0")
+debug_color = Color(0.996078, 0, 0.168627, 0.419608)
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Hurt"]
+position = Vector2(0, 0.75)
+shape = SubResource("RectangleShape2D_eqso1")
+debug_color = Color(0.992157, 0, 0.247059, 0.419608)
+
+[node name="Gun" type="Node2D" parent="."]
+position = Vector2(0, -4)
+script = ExtResource("6_glm2j")
+bullet = ExtResource("7_sfvcn")
+bullet_speed = 150.0
+pos = 5
+
+[node name="ShootTimer" type="Timer" parent="Gun"]
+wait_time = 2.0
+autostart = true
+
+[connection signal="area_entered" from="Hurt" to="." method="_on_hurt_area_entered"]
+[connection signal="timeout" from="Gun/ShootTimer" to="Gun" method="_on_shoot_timer_timeout"]

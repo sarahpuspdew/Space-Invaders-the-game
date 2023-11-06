@@ -1,0 +1,152 @@
+[gd_scene load_steps=22 format=3 uid="uid://bc8ibpxapij1v"]
+
+[ext_resource type="Script" path="res://Scripts/Bunker.gd" id="1_1aors"]
+[ext_resource type="Texture2D" uid="uid://3bevny4pavby" path="res://Assets/Bunker/BunkerTopLeft-1.png" id="1_u6w7o"]
+[ext_resource type="Texture2D" uid="uid://cwq874drcul5i" path="res://Assets/Bunker/BunkerBottomRight-1.png" id="2_p25g1"]
+[ext_resource type="Texture2D" uid="uid://d07veflsoey5q" path="res://Assets/Bunker/BunkerTopRight-1.png" id="3_2m88s"]
+[ext_resource type="Texture2D" uid="uid://cht8xskkgm5fq" path="res://Assets/Bunker/BunkerBottomLeft-1.png" id="4_v3de1"]
+[ext_resource type="Texture2D" uid="uid://ss5c0vnqe4ej" path="res://Assets/Bunker/BunkerTopLeft-2.png" id="6_frr7b"]
+[ext_resource type="Texture2D" uid="uid://cov1x8ksvwpia" path="res://Assets/Bunker/BunkerTopLeft-3.png" id="7_gn37x"]
+[ext_resource type="Texture2D" uid="uid://ccurrcerj0xjf" path="res://Assets/Bunker/BunkerTopLeft-4.png" id="8_4p7qn"]
+[ext_resource type="Texture2D" uid="uid://x8lxpopv1tkr" path="res://Assets/Bunker/BunkerTopRight-2.png" id="9_obve0"]
+[ext_resource type="Texture2D" uid="uid://5yppp0dail6a" path="res://Assets/Bunker/BunkerTopRight-3.png" id="10_jog7c"]
+[ext_resource type="Texture2D" uid="uid://ortn3gmla0a8" path="res://Assets/Bunker/BunkerTopRight-4.png" id="11_miwo1"]
+[ext_resource type="Texture2D" uid="uid://c35b84tvemc6e" path="res://Assets/Bunker/BunkerBottomLeft-2.png" id="12_lpccl"]
+[ext_resource type="Texture2D" uid="uid://b5iqf0x0gubf2" path="res://Assets/Bunker/BunkerBottomLeft-3.png" id="13_re60f"]
+[ext_resource type="Texture2D" uid="uid://7huonn0qn4c1" path="res://Assets/Bunker/BunkerBottomLeft-4.png" id="14_g8jfa"]
+[ext_resource type="Texture2D" uid="uid://dp1kv0pea7a3s" path="res://Assets/Bunker/BunkerBottomRight-2.png" id="15_vayp3"]
+[ext_resource type="Texture2D" uid="uid://dsq1883hm3b3l" path="res://Assets/Bunker/BunkerBottomRight-3.png" id="16_1whf7"]
+[ext_resource type="Texture2D" uid="uid://dkmmxsnqmvt5t" path="res://Assets/Bunker/BunkerBottomRight-4.png" id="17_m8psn"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_25p1l"]
+size = Vector2(8, 8)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5ovvk"]
+size = Vector2(8, 6)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ngb84"]
+size = Vector2(4, 6)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ambq5"]
+size = Vector2(8, 8)
+
+[node name="Bunker" type="Node2D"]
+
+[node name="Left" type="Node2D" parent="."]
+scale = Vector2(-1, 1)
+
+[node name="TopLeft" type="Area2D" parent="Left" node_paths=PackedStringArray("sprite")]
+position = Vector2(4, 4)
+collision_layer = 16
+collision_mask = 14
+script = ExtResource("1_1aors")
+sprite = NodePath("BunkerTopLeft-1")
+sprites = Array[Texture2D]([ExtResource("6_frr7b"), ExtResource("7_gn37x"), ExtResource("8_4p7qn")])
+
+[node name="BunkerTopLeft-1" type="Sprite2D" parent="Left/TopLeft"]
+texture = ExtResource("1_u6w7o")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Left/TopLeft"]
+shape = SubResource("RectangleShape2D_25p1l")
+
+[node name="TopRight" type="Area2D" parent="Left" node_paths=PackedStringArray("sprite")]
+position = Vector2(12, 5)
+collision_layer = 16
+collision_mask = 14
+script = ExtResource("1_1aors")
+sprite = NodePath("BunkerTopRight-1")
+sprites = Array[Texture2D]([ExtResource("9_obve0"), ExtResource("10_jog7c"), ExtResource("11_miwo1")])
+
+[node name="BunkerTopRight-1" type="Sprite2D" parent="Left/TopRight"]
+texture = ExtResource("3_2m88s")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Left/TopRight"]
+shape = SubResource("RectangleShape2D_5ovvk")
+
+[node name="BottomLeft" type="Area2D" parent="Left" node_paths=PackedStringArray("sprite")]
+position = Vector2(6, 11)
+collision_layer = 16
+collision_mask = 14
+script = ExtResource("1_1aors")
+sprite = NodePath("BunkerBottomLeft-1")
+sprites = Array[Texture2D]([ExtResource("12_lpccl"), ExtResource("13_re60f"), ExtResource("14_g8jfa")])
+
+[node name="BunkerBottomLeft-1" type="Sprite2D" parent="Left/BottomLeft"]
+scale = Vector2(1, 0.857143)
+texture = ExtResource("4_v3de1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Left/BottomLeft"]
+shape = SubResource("RectangleShape2D_ngb84")
+
+[node name="BottomRight" type="Area2D" parent="Left" node_paths=PackedStringArray("sprite")]
+position = Vector2(12, 12)
+collision_layer = 16
+collision_mask = 14
+script = ExtResource("1_1aors")
+sprite = NodePath("BunkerBottomRight-1")
+sprites = Array[Texture2D]([ExtResource("15_vayp3"), ExtResource("16_1whf7"), ExtResource("17_m8psn")])
+
+[node name="BunkerBottomRight-1" type="Sprite2D" parent="Left/BottomRight"]
+texture = ExtResource("2_p25g1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Left/BottomRight"]
+shape = SubResource("RectangleShape2D_ambq5")
+
+[node name="Right" type="Node2D" parent="."]
+
+[node name="TopLeft" type="Area2D" parent="Right" node_paths=PackedStringArray("sprite")]
+position = Vector2(4, 4)
+collision_layer = 16
+collision_mask = 14
+script = ExtResource("1_1aors")
+sprite = NodePath("BunkerTopLeft-1")
+sprites = Array[Texture2D]([ExtResource("6_frr7b"), ExtResource("7_gn37x"), ExtResource("8_4p7qn")])
+
+[node name="BunkerTopLeft-1" type="Sprite2D" parent="Right/TopLeft"]
+texture = ExtResource("1_u6w7o")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Right/TopLeft"]
+shape = SubResource("RectangleShape2D_25p1l")
+
+[node name="TopRight" type="Area2D" parent="Right" node_paths=PackedStringArray("sprite")]
+position = Vector2(12, 5)
+collision_layer = 16
+collision_mask = 14
+script = ExtResource("1_1aors")
+sprite = NodePath("BunkerTopRight-1")
+sprites = Array[Texture2D]([ExtResource("9_obve0"), ExtResource("10_jog7c"), ExtResource("11_miwo1")])
+
+[node name="BunkerTopRight-1" type="Sprite2D" parent="Right/TopRight"]
+texture = ExtResource("3_2m88s")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Right/TopRight"]
+shape = SubResource("RectangleShape2D_5ovvk")
+
+[node name="BottomLeft" type="Area2D" parent="Right" node_paths=PackedStringArray("sprite")]
+position = Vector2(6, 11)
+collision_layer = 16
+collision_mask = 14
+script = ExtResource("1_1aors")
+sprite = NodePath("BunkerBottomLeft-1")
+sprites = Array[Texture2D]([ExtResource("12_lpccl"), ExtResource("13_re60f"), ExtResource("14_g8jfa")])
+
+[node name="BunkerBottomLeft-1" type="Sprite2D" parent="Right/BottomLeft"]
+scale = Vector2(1, 0.857143)
+texture = ExtResource("4_v3de1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Right/BottomLeft"]
+shape = SubResource("RectangleShape2D_ngb84")
+
+[node name="BottomRight" type="Area2D" parent="Right" node_paths=PackedStringArray("sprite")]
+position = Vector2(12, 12)
+collision_layer = 16
+collision_mask = 14
+script = ExtResource("1_1aors")
+sprite = NodePath("BunkerBottomRight-1")
+sprites = Array[Texture2D]([ExtResource("15_vayp3"), ExtResource("16_1whf7"), ExtResource("17_m8psn")])
+
+[node name="BunkerBottomRight-1" type="Sprite2D" parent="Right/BottomRight"]
+texture = ExtResource("2_p25g1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Right/BottomRight"]
+shape = SubResource("RectangleShape2D_ambq5")

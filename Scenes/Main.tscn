@@ -1,0 +1,82 @@
+[gd_scene load_steps=8 format=3 uid="uid://d3vcbj3qonelc"]
+
+[ext_resource type="PackedScene" uid="uid://cgfw0stm8m1eg" path="res://Scenes/InvaderSpawner.tscn" id="1_5quk6"]
+[ext_resource type="PackedScene" uid="uid://7hiqwefd20su" path="res://Scenes/Player.tscn" id="1_r0jb1"]
+[ext_resource type="PackedScene" uid="uid://bc8ibpxapij1v" path="res://Scenes/Bunker.tscn" id="2_jlb3n"]
+[ext_resource type="PackedScene" uid="uid://kqmikmy12upt" path="res://Scenes/HUD.tscn" id="3_ylvxf"]
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_qv0ka"]
+b = Vector2(0, 224)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_yls40"]
+b = Vector2(0, 224)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_5jb6k"]
+b = Vector2(0, 224)
+
+[node name="Main" type="Node2D"]
+
+[node name="HUD" parent="." instance=ExtResource("3_ylvxf")]
+
+[node name="Walls" type="StaticBody2D" parent="."]
+position = Vector2(128, 0)
+collision_layer = 32
+
+[node name="Left" type="CollisionShape2D" parent="Walls"]
+position = Vector2(-120, 0)
+shape = SubResource("SegmentShape2D_qv0ka")
+
+[node name="Right" type="CollisionShape2D" parent="Walls"]
+position = Vector2(120, 0)
+shape = SubResource("SegmentShape2D_yls40")
+
+[node name="Boundaries" type="Node2D" parent="."]
+
+[node name="LeftBoundary" type="Area2D" parent="Boundaries"]
+position = Vector2(8, 0)
+collision_layer = 32
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundaries/LeftBoundary"]
+shape = SubResource("SegmentShape2D_5jb6k")
+debug_color = Color(0.913725, 0.290196, 0, 0.419608)
+
+[node name="RightBoundary" type="Area2D" parent="Boundaries"]
+position = Vector2(248, 0)
+collision_layer = 32
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundaries/RightBoundary"]
+shape = SubResource("SegmentShape2D_5jb6k")
+debug_color = Color(0.913725, 0.290196, 0, 0.419608)
+
+[node name="InvaderSpawner" parent="." instance=ExtResource("1_5quk6")]
+position = Vector2(128, 40)
+VERTICAL_SPACING = 0
+INVADER_HEIGHT = 8
+
+[node name="Bunkers" type="Node2D" parent="."]
+position = Vector2(128, 176)
+
+[node name="Bunker" parent="Bunkers" instance=ExtResource("2_jlb3n")]
+
+[node name="Bunker2" parent="Bunkers" instance=ExtResource("2_jlb3n")]
+position = Vector2(-48, 0)
+
+[node name="Bunker3" parent="Bunkers" instance=ExtResource("2_jlb3n")]
+position = Vector2(-96, 0)
+
+[node name="Bunker4" parent="Bunkers" instance=ExtResource("2_jlb3n")]
+position = Vector2(48, 0)
+
+[node name="Bunker5" parent="Bunkers" instance=ExtResource("2_jlb3n")]
+position = Vector2(96, 0)
+
+[node name="Player" parent="." instance=ExtResource("1_r0jb1")]
+position = Vector2(128, 216)
+max_speed = 50.0
+acceleration = 5.0
+decceleration = 10.0
+
+[connection signal="area_entered" from="Boundaries/LeftBoundary" to="InvaderSpawner" method="_on_left_boundary_area_entered"]
+[connection signal="area_entered" from="Boundaries/RightBoundary" to="InvaderSpawner" method="_on_right_boundary_area_entered"]
